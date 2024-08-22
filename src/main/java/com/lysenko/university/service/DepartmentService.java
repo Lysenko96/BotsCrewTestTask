@@ -37,7 +37,6 @@ public class DepartmentService {
     @PostConstruct
     public void init() {
         DatabasePopulatorUtils.execute(populator, dataSource);
-        // for fun may be optimization :)
         departmentList = departmentRepository.findAll();
     }
 
@@ -108,6 +107,7 @@ public class DepartmentService {
         List<Lector> lectorList = lectorRepository.findByTemplate(template);
         StringJoiner joiner = new StringJoiner(",");
         lectorList.forEach(l -> joiner.add(l.getFirstName() + " " + l.getLastName()));
+
         return joiner.toString();
     }
 
