@@ -51,7 +51,8 @@ public class DepartmentService {
     }
 
     public String showStatistic(String departmentName) {
-        Department department = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
+//        Department department = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
+        Department department = departmentRepository.findByName(departmentName);
         long assistantsCount = 0;
         long associateProfessorsCount = 0;
         long professorsCount = 0;
@@ -82,7 +83,8 @@ public class DepartmentService {
     }
 
     public String showAverageSalary(String departmentName) {
-        Department department = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
+//        Department department = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
+        Department department = departmentRepository.findByName(departmentName);
         long averageSalary = 0;
         if (department != null) {
             List<Lector> lectorList = department.getLectorList();
@@ -95,7 +97,8 @@ public class DepartmentService {
     }
 
     public String employeesInDepartment(String departmentName) {
-        Department department = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
+//        Department department = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
+        Department department = departmentRepository.findByName(departmentName);
         long emloyeeCount = 0;
         if (department != null) {
             List<Lector> lectorList = department.getLectorList();
