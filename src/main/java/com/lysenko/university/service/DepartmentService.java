@@ -37,13 +37,14 @@ public class DepartmentService {
     @PostConstruct
     public void init() {
         DatabasePopulatorUtils.execute(populator, dataSource);
-        departmentList = departmentRepository.findAll();
+//        departmentList = departmentRepository.findAll();
         // findByName
 //        System.out.println(departmentRepository.findByName("department"));
     }
 
     public String headOfDepartment(String departmentName) {
-        Department result = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
+//        Department result = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
+        Department result = departmentRepository.findByName(departmentName);
         String head = "unknown";
         if (result != null) head = result.getHead();
 
