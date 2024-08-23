@@ -18,11 +18,12 @@ public class Department {
     private Long id;
     private String name;
     private String head;
-    @ManyToMany(mappedBy = "departmentList", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "departmentList", fetch = FetchType.EAGER)
     private List<Lector> lectorList;
 
     public Department(String name, String head) {
         this.name = name;
         this.head = head;
     }
+
 }
