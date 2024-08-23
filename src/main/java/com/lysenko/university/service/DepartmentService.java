@@ -17,7 +17,6 @@ import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
@@ -37,13 +36,9 @@ public class DepartmentService {
     @PostConstruct
     public void init() {
         DatabasePopulatorUtils.execute(populator, dataSource);
-//        departmentList = departmentRepository.findAll();
-        // findByName
-//        System.out.println(departmentRepository.findByName("department"));
     }
 
     public String headOfDepartment(String departmentName) {
-//        Department result = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
         Department result = departmentRepository.findByName(departmentName);
         String head = "unknown";
         if (result != null) head = result.getHead();
@@ -52,17 +47,12 @@ public class DepartmentService {
     }
 
     public String showStatistic(String departmentName) {
-//        Department department = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
         Department department = departmentRepository.findByName(departmentName);
         long assistantsCount = 0;
         long associateProfessorsCount = 0;
         long professorsCount = 0;
-        if (department != null) {
-//            List<Lector> lectorList = department.getLectorList();
-//            assistantsCount = lectorList.stream().filter(l -> l.getDegree().equals(ASSISTANT)).count();
-//            associateProfessorsCount = lectorList.stream().filter(l -> l.getDegree().equals(ASSOCIATE_PROFESSOR)).count();
-//            professorsCount = lectorList.stream().filter(l -> l.getDegree().equals(PROFESSOR)).count();
 
+        if (department != null) {
             List<StatisticDto> statisticDtoList = new ArrayList<>();
             departmentRepository.findStatisticDtoById(department.getId()).forEach(s -> statisticDtoList.add(new StatisticDto(s.getDegree(), s.getCount())));
             assistantsCount = calcCounterLectorByDegree(statisticDtoList, ASSISTANT);
@@ -84,7 +74,6 @@ public class DepartmentService {
     }
 
     public String showAverageSalary(String departmentName) {
-//        Department department = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
         Department department = departmentRepository.findByName(departmentName);
         long averageSalary = 0;
         if (department != null) {
@@ -98,7 +87,6 @@ public class DepartmentService {
     }
 
     public String employeesInDepartment(String departmentName) {
-//        Department department = departmentList.stream().filter(d -> d.getName().equals(departmentName)).findFirst().orElse(null);
         Department department = departmentRepository.findByName(departmentName);
         long emloyeeCount = 0;
         if (department != null) {

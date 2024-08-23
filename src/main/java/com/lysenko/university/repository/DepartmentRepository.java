@@ -17,8 +17,7 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
     Department findByName(String name);
 
-    // Bad practice =/
     @Query(value = "SELECT l.degree, COUNT(*) FROM lectors_departments ld JOIN lector l ON ld.lector_id = l.id " +
             "JOIN department d ON ld.department_id = d.id WHERE d.id = :id GROUP BY l.degree", nativeQuery = true)
-    List<StatisticDto> findStatisticDtoById(@Param("id")Long id);
+    List<StatisticDtoRepository> findStatisticDtoById(@Param("id") Long id);
 }
