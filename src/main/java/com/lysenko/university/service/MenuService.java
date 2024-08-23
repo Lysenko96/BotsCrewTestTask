@@ -93,15 +93,14 @@ public class MenuService {
                     System.out.println(departmentService.findAll());
                 } else if (input.equals("9")) {
                     System.out.println(lectorService.findAll());
+                } else if (input.equals("10")) {
+                    text = "Enter department id: ";
+                    String departmentId = command(text, scanner);
+                    text = "Enter lector id: ";
+                    String lectorId = command(text, scanner);
+                    Department department = departmentService.addLector(departmentId, lectorId);
+                    System.out.println(department);
                 }
-//                else if (input.equals("10")) {
-//                    text ="Enter department name: ";
-//                    String departmentId = command(text, scanner);
-//                    text ="Enter lector id: ";
-//                    String lectorId = command(text, scanner);
-//                    Department department = departmentService.addLector(departmentId, lectorId);
-//                    System.out.println(department);
-//                }
             }
         }
     }

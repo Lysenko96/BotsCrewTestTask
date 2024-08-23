@@ -30,6 +30,7 @@ public class DepartmentService {
     @PostConstruct
     public void init() {
         DatabasePopulatorUtils.execute(populator, dataSource);
+//        departmentRepository.insertLectorIdDepartmentId("1", "1");
     }
 
     public String headOfDepartment(String departmentName) {
@@ -99,18 +100,17 @@ public class DepartmentService {
         return departmentRepository.findAll();
     }
 
-    public Department findById(Long id) {
-        return departmentRepository.findById(id).orElse(null);
+    public Department addLector(String departmentId, String lectorId) {
+        Department department = departmentRepository.findById(Long.parseLong(departmentId)).orElse(null);
+        Lector lector = lectorService.findById(Long.parseLong(lectorId));
+        if (department != null && lector != null) {
+            List<Lector> lectorList = department.getLectorList();
+            lectorList.add(lector);
+            department.setLectorList(lectorList);
+            department = departmentRepository.save(department);
+        }
+        departmentRepository.insertLectorIdDepartmentId(Long.parseLong(departmentId), Long.parseLong(lectorId));
+        return department;
     }
-
-//    public Department addLector(String departmentId, String lectorId){
-//        Department department = departmentRepository.findById(Long.parseLong(departmentId)).orElse(null);
-//        Lector lector = lectorService.findById(Long.parseLong(lectorId));
-//        List<Lector> lectorList = department.getLectorList();
-//        lectorList.add(lector);
-//        department.setLectorList(lectorList);
-//        save(department);
-//        return department;
-//    }
 
 }
