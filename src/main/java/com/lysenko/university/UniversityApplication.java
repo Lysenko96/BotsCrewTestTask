@@ -23,8 +23,8 @@ import java.util.Scanner;
 public class UniversityApplication {
 
     private final DepartmentService departmentService;
-    private final DepartmentRepository departmentRepository;
-    private final LectorRepository lectorRepository;
+//    private final DepartmentRepository departmentRepository;
+//    private final LectorRepository lectorRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(UniversityApplication.class, args);

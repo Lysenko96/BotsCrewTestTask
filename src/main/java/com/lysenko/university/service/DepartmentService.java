@@ -38,6 +38,8 @@ public class DepartmentService {
     public void init() {
         DatabasePopulatorUtils.execute(populator, dataSource);
         departmentList = departmentRepository.findAll();
+        // findByName
+//        System.out.println(departmentRepository.findByName("department"));
     }
 
     public String headOfDepartment(String departmentName) {
