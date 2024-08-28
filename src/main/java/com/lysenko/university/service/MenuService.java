@@ -5,9 +5,7 @@ import com.lysenko.university.model.Department;
 import com.lysenko.university.model.Lector;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.StringJoiner;
 
@@ -46,60 +44,75 @@ public class MenuService {
 
                 String text = "department name: ";
 
-                if (input.equals("1")) {
-                    String result = command(text, scanner);
-                    System.out.println(departmentService.headOfDepartment(result));
-                } else if (input.equals("2")) {
-                    String result = command(text, scanner);
-                    System.out.println(departmentService.showStatistic(result));
-                } else if (input.equals("3")) {
-                    String result = command(text, scanner);
-                    System.out.println(departmentService.showAverageSalary(result));
-                } else if (input.equals("4")) {
-                    String result = command(text, scanner);
-                    System.out.println(departmentService.employeesInDepartment(result));
-                } else if (input.equals("5")) {
-                    text = "Enter template: ";
-                    String result = command(text, scanner);
-                    System.out.println(departmentService.searchByTemplate(result));
-                } else if (input.equals("6")) {
-                    text = "Enter new department head: ";
-                    String head = command(text, scanner);
-                    text = "Enter new department name: ";
-                    String name = command(text, scanner);
-                    Department department = new Department(head, name);
-                    Department departmentDB = departmentService.save(department);
-                    System.out.println(departmentDB);
-                } else if (input.equals("7")) {
-                    text = "Enter new lector firstName: ";
-                    String firstName = command(text, scanner);
-                    text = "Enter new lector lastName: ";
-                    String lastName = command(text, scanner);
-                    StringJoiner joiner = new StringJoiner(System.lineSeparator());
-                    joiner.add("1 - ASSISTANT").add("2 - ASSOCIATE_PROFESSOR").add("3 - PROFESSOR");
-                    System.out.println(joiner);
-                    text = "Enter new lector degree: ";
-                    String command = command(text, scanner);
-                    Degree degree = null;
-                    if (command.equals("1")) degree = ASSISTANT;
-                    else if (command.equals("2")) degree = ASSOCIATE_PROFESSOR;
-                    else if (command.equals("3")) degree = PROFESSOR;
-                    text = "Enter new lector salary: ";
-                    String salary = command(text, scanner);
-                    Lector lector = new Lector(firstName, lastName, degree, Integer.parseInt(salary));
-                    Lector lectorDB = lectorService.save(lector);
-                    System.out.println(lectorDB);
-                } else if (input.equals("8")) {
-                    System.out.println(departmentService.findAll());
-                } else if (input.equals("9")) {
-                    System.out.println(lectorService.findAll());
-                } else if (input.equals("10")) {
-                    text = "Enter department id: ";
-                    String departmentId = command(text, scanner);
-                    text = "Enter lector id: ";
-                    String lectorId = command(text, scanner);
-                    Department department = departmentService.addLector(departmentId, lectorId);
-                    System.out.println(department);
+                switch (input) {
+                    case "1":
+                        String result = command(text, scanner);
+                        System.out.println(departmentService.headOfDepartment(result));
+                        break;
+                    case "2":
+                        result = command(text, scanner);
+                        System.out.println(departmentService.showStatistic(result));
+                        break;
+                    case "3":
+                        result = command(text, scanner);
+                        System.out.println(departmentService.showAverageSalary(result));
+                        break;
+                    case "4":
+                        result = command(text, scanner);
+                        System.out.println(departmentService.employeesInDepartment(result));
+                        break;
+                    case "5":
+                        text = "Enter template: ";
+                        result = command(text, scanner);
+                        System.out.println(departmentService.searchByTemplate(result));
+                        break;
+                    case "6":
+                        text = "Enter new department head: ";
+                        String head = command(text, scanner);
+                        text = "Enter new department name: ";
+                        String name = command(text, scanner);
+                        Department department = new Department(head, name);
+                        Department departmentDB = departmentService.save(department);
+                        System.out.println(departmentDB);
+                        break;
+                    case "7":
+                        text = "Enter new lector firstName: ";
+                        String firstName = command(text, scanner);
+                        text = "Enter new lector lastName: ";
+                        String lastName = command(text, scanner);
+                        StringJoiner joiner = new StringJoiner(System.lineSeparator());
+                        joiner.add("1 - ASSISTANT").add("2 - ASSOCIATE_PROFESSOR").add("3 - PROFESSOR");
+                        System.out.println(joiner);
+                        text = "Enter new lector degree: ";
+                        String command = command(text, scanner);
+                        Degree degree = switch (command) {
+                            case "1" -> ASSISTANT;
+                            case "2" -> ASSOCIATE_PROFESSOR;
+                            case "3" -> PROFESSOR;
+                            default -> null;
+                        };
+                        text = "Enter new lector salary: ";
+                        String salary = command(text, scanner);
+                        Lector lector = new Lector(firstName, lastName, degree, Integer.parseInt(salary));
+                        Lector lectorDB = lectorService.save(lector);
+                        System.out.println(lectorDB);
+                        break;
+                    case "8":
+                        System.out.println(departmentService.findAll());
+                        break;
+                    case "9":
+                        System.out.println(lectorService.findAll());
+                        break;
+                    case "10":
+                        text = "Enter department id: ";
+                        String departmentId = command(text, scanner);
+                        text = "Enter lector id: ";
+                        String lectorId = command(text, scanner);
+                        department = departmentService.addLector(departmentId, lectorId);
+                        System.out.println(department);
+                        break;
+                    default:
+                        menu();
                 }
             }
         }

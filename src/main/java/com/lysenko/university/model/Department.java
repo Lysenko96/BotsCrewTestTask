@@ -18,7 +18,7 @@ public class Department {
     private Long id;
     private String name;
     private String head;
-    @ManyToMany(mappedBy = "departmentList", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "departmentList")
     private List<Lector> lectorList;
 
     public Department(String name, String head) {

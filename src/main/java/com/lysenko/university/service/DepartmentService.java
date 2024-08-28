@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,7 +29,6 @@ public class DepartmentService {
     @PostConstruct
     public void init() {
         DatabasePopulatorUtils.execute(populator, dataSource);
-//        departmentRepository.insertLectorIdDepartmentId("1", "1");
     }
 
     public String headOfDepartment(String departmentName) {
@@ -63,14 +61,8 @@ public class DepartmentService {
     }
 
     public String showAverageSalary(String departmentName) {
-        Department department = departmentRepository.findByName(departmentName);
-        long averageSalary = 0;
-        if (department != null) {
-            List<Lector> lectorList = department.getLectorList();
-            averageSalary = lectorList.stream().collect(Collectors.averagingInt(Lector::getSalary)).longValue();
-        }
-
-        return String.format("The average salary of %s is %d", departmentName, averageSalary);
+        double averageSalary = departmentRepository.findSalaryAverageByDepartmentName(departmentName);
+        return String.format("The average salary of %s is %.2f", departmentName, averageSalary);
     }
 
     public String employeesInDepartment(String departmentName) {
